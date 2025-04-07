@@ -18,14 +18,14 @@ class DataExtractor():
         return dta
     
     def retrieve_pdf_data(self, url):
-        dfs = tabula.read_pdf(url, stream=True)
-        return dfs           
+        dfs = tabula.read_pdf(url, stream=True, pages='all', multiple_tables=False)
+        # combined_df = pd.concat(dfs, ignore_index=True)
+        return dfs[-1]
     
 def main():
     obj = DataExtractor()
     db = DatabaseConnector()
     dta = obj.read_rds_table(db, 'legacy_store_details')
-    print(dta)
 
 if __name__ == "__main__":
     main()
