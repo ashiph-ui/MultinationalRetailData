@@ -27,19 +27,7 @@ class DatabaseConnector:
     
     def upload_to_db(self):
         creds = self.read_db_creds('mydb_creds.yaml')
-        engine = create_engine(
-            f"postgresql://{creds['RDS_USER']}:{creds['RDS_PASSWORD']}@"
-            f"{creds['RDS_HOST']}:{creds['RDS_PORT']}/{creds['RDS_DATABASE']}"
-        )
         
-        from sqlalchemy import text
-        with engine.connect() as connection:
-            inspector = inspect(engine)
-            print(inspector.get_table_names())
-        
-        
-        
-
     
 def main():
     db_connector = DatabaseConnector()
@@ -49,7 +37,7 @@ def main():
     # List tables
     tables = db_connector.list_db_tables(engine)
     print("Available tables:", tables)
-    db_connector.upload_to_db()
+    
 
 if __name__ == "__main__":
     main()

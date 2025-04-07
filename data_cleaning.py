@@ -1,4 +1,5 @@
 import pandas as pd
+from database_utils import DatabaseConnector
 
 class DataCleaning():
     def __init__(self):
@@ -18,11 +19,11 @@ class DataCleaning():
 def main():
     from data_extraction import DataExtractor
     extractor = DataExtractor()
-    df = extractor.read_rds_table('legacy_users')
+    db = DatabaseConnector()
+    df = extractor.read_rds_table(db, 'legacy_users')
     data_cleaner = DataCleaning()
     cleaned_df = data_cleaner.clean_user_data(df)
     print(len(cleaned_df))
-    
     
 
 if __name__ == "__main__":

@@ -9,21 +9,20 @@ class DataExtractor():
     def __init__(self ):
         pass
     
-    def read_rds_table(self, table_name='legacy_users'):
-        db_connector = DatabaseConnector()
-        creds = db_connector.read_db_creds()
-        engine = db_connector.init_db_engine(creds)
+    def read_rds_table(self, db_instance, table_name='legacy_users'):
+
+        creds = db_instance.read_db_creds()
+        engine = db_instance.init_db_engine(creds)
         with engine.connect() as con:
             dta = pd.read_sql(table_name, con)
         return dta
-        
-        
-        
-        
+           
     
 def main():
     obj = DataExtractor()
-    obj.read_rds_table('legacy_store_details')
+    db = DatabaseConnector()
+    dta = obj.read_rds_table(db, 'legacy_store_details')
+    print(dta)
 
 if __name__ == "__main__":
     main()
